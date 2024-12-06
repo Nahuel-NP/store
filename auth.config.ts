@@ -8,8 +8,6 @@ import bcrypt from 'bcryptjs';
 
 export default defineConfig({
   providers: [
-    //TODO:
-
     Credentials({
       credentials: {
         email: { label: 'Email', type: 'email' },

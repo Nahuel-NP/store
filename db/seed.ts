@@ -33,8 +33,17 @@ export default async function seed() {
 		password: bcrypt.hashSync('123456'),
 		role: 'user'
 	}
+	
+	const nahuel ={
+		id: UUID(),
+		name: 'Nahuel Pedroso',
+		email: 'pedroso.nahuel.dev@gmail.com',
+		password: bcrypt.hashSync('123456'),
+		role: 'user'
+
+	}
 
 	await db.insert(Role).values(roles);
-	await db.insert(User).values([johnDoe, janeDoe]);
+	await db.insert(User).values([johnDoe, janeDoe,nahuel]);
 
 }
