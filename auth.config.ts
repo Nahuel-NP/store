@@ -4,6 +4,7 @@ import { defineConfig } from 'auth-astro';
 import Credentials from '@auth/core/providers/credentials';
 import { db, eq, User } from 'astro:db';
 import bcrypt from 'bcryptjs';
+import type { AdapterUser } from '@auth/core/adapters';
 
 
 export default defineConfig({
@@ -26,10 +27,24 @@ export default defineConfig({
         }
 
         const { password: _, ...rest } = user;
-        console.log("🚀 ~ authorize: ~ rest:", rest)
 
         return rest
       }
     })
   ],
+  callbacks: {
+    jwt: ({ token, user }) => {
+
+      if (user) {
+        token.user = user
+      }
+      return token
+    },
+    session: ({ session, token }) => {
+      session.user = token.user as AdapterUser;
+      console.log(session.user)
+
+      return session
+    }
+  }
 });
