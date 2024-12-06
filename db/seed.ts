@@ -39,7 +39,7 @@ export default async function seed() {
 		name: 'Nahuel Pedroso',
 		email: 'pedroso.nahuel.dev@gmail.com',
 		password: bcrypt.hashSync('123456'),
-		role: 'user'
+		role: 'admin'
 
 	}
 
