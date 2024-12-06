@@ -26,12 +26,19 @@ importers:
       auth-astro:
         specifier: ^4.2.0
         version: 4.2.0(@auth/core@0.37.4)(astro@5.0.2(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))
+      bcryptjs:
+        specifier: ^2.4.3
+        version: 2.4.3
       sweetalert2:
         specifier: ^11.14.5
         version: 11.14.5
       tailwindcss:
         specifier: ^3.4.16
         version: 3.4.16
+    devDependencies:
+      '@types/bcryptjs':
+        specifier: ^2.4.6
+        version: 2.4.6
 
 packages:
 
@@ -728,6 +735,9 @@ packages:
   '@shikijs/vscode-textmate@9.3.0':
     resolution: {integrity: sha512-jn7/7ky30idSkd/O5yDBfAnVt+JJpepofP/POZ1iMOxK59cOfqIgg/Dj0eFsjOTMw+4ycJN0uhZH/Eb0bs/EUA==}
 
+  '@types/bcryptjs@2.4.6':
+    resolution: {integrity: sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==}
+
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
@@ -871,6 +881,9 @@ packages:
 
   base-64@1.0.0:
     resolution: {integrity: sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==}
+
+  bcryptjs@2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -3013,6 +3026,8 @@ snapshots:
 
   '@shikijs/vscode-textmate@9.3.0': {}
 
+  '@types/bcryptjs@2.4.6': {}
+
   '@types/cookie@0.6.0': {}
 
   '@types/debug@4.1.12':
@@ -3225,6 +3240,8 @@ snapshots:
   balanced-match@1.0.2: {}
 
   base-64@1.0.0: {}
+
+  bcryptjs@2.4.3: {}
 
   binary-extensions@2.3.0: {}
 
