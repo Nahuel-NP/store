@@ -26,8 +26,7 @@ export const onRequest = defineMiddleware(
       locals.isAdmin = user.role === 'admin';
     }
 
-    // TODO: Eventualmente tenemos que controlar el acceso por roles
-    if (!locals.isAdmin && url.pathname.startsWith('/dashboard')) {
+  if (!locals.isAdmin && url.pathname.startsWith('/dashboard')) {
       return redirect('/');
     }
 
