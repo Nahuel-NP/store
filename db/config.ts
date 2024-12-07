@@ -18,9 +18,35 @@ const Role = defineTable({
     name: column.text(),
   }
 })
-// https://astro.build/db/config
+
+
+const Product = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    description: column.text(),
+    gender: column.text(),
+    price: column.number(),
+    sizes: column.text(),
+    slug: column.text(),
+    stock: column.number(),
+    tags: column.text(),
+    title: column.text(),
+    type: column.text(),
+
+    user: column.text({ references: () => User.columns.id }),
+  }
+})
+
+const ProductImage = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    productID: column.text({ references: () => Product.columns.id }),
+    image: column.text(),
+  }
+})
+
 export default defineDb({
   tables: {
-    User, Role
+    User, Role, Product, ProductImage
   }
 });
