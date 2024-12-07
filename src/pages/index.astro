@@ -1,7 +1,15 @@
 ---
-import MainLayout from '@/layouts/MainLayout.astro';
+import MainLayout from "@/layouts/MainLayout.astro";
+import { actions } from "astro:actions";
+
+const { data, error } = await Astro.callAction(actions.getProductsByPageAction,{});
+
+if (error) {
+  return Astro.redirect('/error')
+}
+
 ---
 
 <MainLayout>
-  <h1 class="text-3xl">Home Page</h1>
+  <h1 class="text-3xl">Products</h1>
 </MainLayout>
