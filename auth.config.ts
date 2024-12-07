@@ -42,7 +42,7 @@ export default defineConfig({
     },
     session: ({ session, token }) => {
       session.user = token.user as AdapterUser;
-      console.log(session.user)
+      // console.log(session.user)
 
       return session
     }

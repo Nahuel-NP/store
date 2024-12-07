@@ -1,7 +1,8 @@
 
 import { v4 as UUID } from 'uuid';
 import bcrypt from 'bcryptjs';
-import { db, Role, User } from 'astro:db';
+import { db, Role, User, Product, ProductImage } from 'astro:db';
+import { seedProducts } from './seed-data';
 
 
 export default async function seed() {
@@ -33,8 +34,8 @@ export default async function seed() {
 		password: bcrypt.hashSync('123456'),
 		role: 'user'
 	}
-	
-	const nahuel ={
+
+	const nahuel = {
 		id: UUID(),
 		name: 'Nahuel Pedroso',
 		email: 'pedroso.nahuel.dev@gmail.com',
@@ -44,6 +45,38 @@ export default async function seed() {
 	}
 
 	await db.insert(Role).values(roles);
-	await db.insert(User).values([johnDoe, janeDoe,nahuel]);
+	await db.insert(User).values([johnDoe, janeDoe, nahuel]);
 
+
+	const queries: any = [];
+
+	seedProducts.forEach(product => {
+		const newProduct = {
+			id: UUID(),
+			description: product.description,
+			stock: product.stock,
+			price: product.price,
+			sizes: product.sizes.join(','),
+			slug: product.slug,
+			tags: product.tags.join(','),
+			title: product.title,
+			type: product.type,
+			gender: product.gender,
+			user: nahuel.id
+		};
+
+		queries.push(db.insert(Product).values(newProduct));
+
+		product.images.forEach(image => {
+			const newImage = {
+				id: UUID(),
+				productID: newProduct.id,
+				image
+			};
+
+			queries.push(db.insert(ProductImage).values(newImage));
+		});
+	})
+
+	await db.batch(queries)
 }
