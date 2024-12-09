@@ -1,7 +1,8 @@
 
 
+import type { ProductWithImage } from "@/interfaces";
 import { defineAction } from "astro:actions"
-import { count, db, eq, Product, ProductImage } from "astro:db";
+import { count, db, eq, Product, ProductImage, sql } from "astro:db";
 import { z } from "astro:schema"
 
 export const getProductsByPageAction = defineAction({
@@ -25,9 +26,19 @@ export const getProductsByPageAction = defineAction({
         totalRecords: totalRecords.count
       }
     }
-    const products = await db.select().from(Product).innerJoin(ProductImage,eq(Product.id,ProductImage.productID)).limit(limit).offset((page - 1) * limit);
+    // const products = await db.select().from(Product).innerJoin(ProductImage,eq(Product.id,ProductImage.productID)).limit(limit).offset((page - 1) * limit);
+    //raw querie
+    const productsQuery = sql.raw(`select a.*,
+( select GROUP_CONCAT(image,',') from 
+	( select * from ProductImage where productId = a.id limit 2 )
+ ) as images
+from Product a
+LIMIT ${limit} OFFSET ${page - 1 * limit};`)
+
+    const { rows } = await db.run(productsQuery);
+
     return {
-      products,
+      products: rows as unknown as ProductWithImage,
       totalPages,
       currentPage: page,
       totalRecords: totalRecords.count
