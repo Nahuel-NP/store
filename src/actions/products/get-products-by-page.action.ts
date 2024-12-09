@@ -20,7 +20,7 @@ export const getProductsByPageAction = defineAction({
     if (page > totalPages) {
 
       return {
-        products: [],
+        products: [] as ProductWithImage[],
         totalPages,
         currentPage: page,
         totalRecords: totalRecords.count
