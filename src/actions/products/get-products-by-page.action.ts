@@ -38,7 +38,7 @@ LIMIT ${limit} OFFSET ${page - 1 * limit};`)
     const { rows } = await db.run(productsQuery);
 
     return {
-      products: rows as unknown as ProductWithImage,
+      products: rows as unknown as ProductWithImage[],
       totalPages,
       currentPage: page,
       totalRecords: totalRecords.count
