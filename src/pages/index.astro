@@ -1,15 +1,20 @@
 ---
+import { ProductList } from "@/components";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { actions } from "astro:actions";
 
-const { data, error } = await Astro.callAction(actions.getProductsByPageAction,{});
+const { data, error } = await Astro.callAction(
+  actions.getProductsByPageAction,
+  {}
+);
 
 if (error) {
-  return Astro.redirect('/error')
+  return Astro.redirect("/error");
 }
-
+const { products, totalPages } = data;
 ---
 
 <MainLayout>
   <h1 class="text-3xl">Products</h1>
+  <ProductList products={products} client:idle />
 </MainLayout>
