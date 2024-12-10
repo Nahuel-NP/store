@@ -12,7 +12,6 @@ export const getProductsByPageAction = defineAction({
     limit: z.number().default(12)
   }),
   handler: async ({ page, limit }) => {
-
     page = page <= 0 ? 1 : page;
     const [totalRecords] = await db.select({ count: count() }).from(Product);
     const totalPages = Math.ceil(totalRecords.count / limit);
@@ -33,7 +32,7 @@ export const getProductsByPageAction = defineAction({
 	( select * from ProductImage where productId = a.id limit 2 )
  ) as images
 from Product a
-LIMIT ${limit} OFFSET ${page - 1 * limit};`)
+LIMIT ${limit} OFFSET ${(page - 1) * limit};`)
 
     const { rows } = await db.run(productsQuery);
 
