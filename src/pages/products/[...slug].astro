@@ -15,9 +15,8 @@ const { product, images } = data;
 ---
 
 <MainLayout title={product.title} description={product.description}>
-  <h1>{product.title}</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 w-full">
+  <div class="grid grid-cols-1 md:grid-cols-3  w-full">
     <ProductSlideshow images={images} />
 
     <section>
