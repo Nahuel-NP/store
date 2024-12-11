@@ -52,6 +52,7 @@ const { product, images } = data;
   <input type="hidden" id="product-id" value={product.id} />
 </MainLayout>
 <script>
+  import {CartCookiesClient} from '@/utils'
   const sizeElements = document.querySelectorAll("li");
   const errorEl = document.querySelector('#error-msg');
 
@@ -93,11 +94,15 @@ const { product, images } = data;
     }
     addToCartBtn.disabled = true;
 
-    console.log({
+
+    CartCookiesClient.addToCart({
       id: productIdInput.value,
       size,
       quantity,
-    });
+    })
+    //TODO: cambiar con view transition;
+
+    window.location.href = '/cart'
   });
 </script>
 
