@@ -32,7 +32,7 @@ const { product, images } = data;
           ))
         }
       </ul>
-
+      <span class="text-red-500 text-xs m-0 invisible" id="error-msg">Seleccione una talla</span>
       <h3 class="mt-5">Cantidad</h3>
       <div>
         <button class="btn-quantity">-</button>
@@ -40,7 +40,7 @@ const { product, images } = data;
         <button class="btn-quantity">+</button>
       </div>
 
-      <button class="mt-5 bg-blue-500 text-white p-3 w-full"
+      <button class="mt-5 bg-blue-500 text-white p-3 w-full disabled:bg-gray-200"
         >Añadir al carrito</button
       >
 
@@ -53,12 +53,15 @@ const { product, images } = data;
 </MainLayout>
 <script>
   const sizeElements = document.querySelectorAll("li");
+  const errorEl = document.querySelector('#error-msg');
+
   sizeElements.forEach((liEl) => {
     liEl.addEventListener("click", () => {
       sizeElements.forEach((sizeEl) =>
         sizeEl.classList.remove("selected-size")
       );
       liEl.classList.add("selected-size");
+      errorEl?.classList.add('invisible');
     });
   });
 
@@ -85,7 +88,8 @@ const { product, images } = data;
   addToCartBtn.addEventListener("click", () => {
     const size = document.querySelector(".selected-size")?.textContent;
     if (!size) {
-      return alert("seleccione una talla");
+      errorEl?.classList.remove('invisible');
+      return 
     }
     addToCartBtn.disabled = true;
 
