@@ -9,13 +9,16 @@ const pageParam = Number(searchParams.get("page") ?? 1);
 
 const { data, error } = await Astro.callAction(
   actions.getProductsByPageAction,
-  {page:pageParam}
+  { page: pageParam }
 );
 
 if (error) {
-  return Astro.redirect("/error");
+  return Astro.redirect("/404");
 }
 const { products, totalPages } = data;
+if (data.products.length === 0) {
+  return Astro.redirect(`/?page=${totalPages}`);
+}
 ---
 
 <MainLayout>
