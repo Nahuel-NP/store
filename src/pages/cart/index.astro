@@ -1,11 +1,13 @@
 ---
+import { LoadProductFromCartAction } from "@/actions/cart/load-products-cart.action";
 import MainLayout from "@/layouts/MainLayout.astro";
-const cart = Astro.cookies.get("cart");
+
+const { data, error } = await Astro.callAction(LoadProductFromCartAction, {});
 ---
 
 <MainLayout title="Cart">
   <h1>Cart</h1>
   <code>
-    {JSON.stringify(cart)}
+    {JSON.stringify(data)}
   </code>
 </MainLayout>
