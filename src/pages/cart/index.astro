@@ -8,7 +8,7 @@ const { data: products, error } = await Astro.callAction(
   {}
 );
 
-console.log(error)
+console.log(error);
 if (error) {
   return Astro.redirect("/");
 }
@@ -89,21 +89,26 @@ if (products.length > 0) {
 
 <script>
   import { CartCookiesClient } from "@/utils";
+import { navigate } from "astro:transitions/client";
 
-  const deleteButtons: NodeListOf<HTMLButtonElement> =
-    document.querySelectorAll(".btn-delete");
+  document.addEventListener("astro:page-load", () => {
+    const deleteButtons: NodeListOf<HTMLButtonElement> =
+      document.querySelectorAll(".btn-delete");
 
-  deleteButtons.forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      const target = event.target as HTMLButtonElement;
-      const productId = target.dataset.id ?? "";
-      const size = target.dataset.size ?? "";
+    if (deleteButtons.length === 0) {
+      return;
+    }
+    deleteButtons.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        const target = event.target as HTMLButtonElement;
+        const productId = target.dataset.id ?? "";
+        const size = target.dataset.size ?? "";
 
-      console.log({ productId, size });
-      CartCookiesClient.removeFromCart(productId, size);
+        console.log({ productId, size });
+        CartCookiesClient.removeFromCart(productId, size);
 
-      //TODO: cambiar con view transition
-      window.location.reload();
+        navigate('/cart')
+      });
     });
   });
 </script>

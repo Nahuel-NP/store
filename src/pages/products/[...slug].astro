@@ -57,6 +57,7 @@ const { product, images } = data;
 <script>
   import { itemsInCart } from "@/store/cart.store";
   import { CartCookiesClient } from "@/utils";
+import { navigate } from "astro:transitions/client";
 
   document.addEventListener("astro:page-load", () => {
     const sizeElements = document.querySelectorAll("li");
@@ -65,23 +66,23 @@ const { product, images } = data;
     sizeElements.forEach((liEl) => {
       liEl.addEventListener("click", () => {
         sizeElements.forEach((sizeEl) =>
-        sizeEl.classList.remove("selected-size")
+          sizeEl.classList.remove("selected-size")
         );
         liEl.classList.add("selected-size");
         errorEl?.classList.add("invisible");
       });
     });
-    
+
     const quantityInput = document.querySelector("input") as HTMLInputElement;
     const productIdInput = document.querySelector(
       "#product-id"
     ) as HTMLInputElement;
-    
+
     let quantity = 1;
-    
+
     const [decrementBtn, incrementBtn, addToCartBtn] =
-    document.querySelectorAll("button");
-    
+      document.querySelectorAll("button");
+
     if (!incrementBtn || !decrementBtn || !addToCartBtn) {
       return;
     }
@@ -101,7 +102,7 @@ const { product, images } = data;
         errorEl?.classList.remove("invisible");
         return;
       }
-      // addToCartBtn.disabled = true;
+      addToCartBtn.disabled = true;
 
       const cart = CartCookiesClient.addToCart({
         id: productIdInput.value,
@@ -109,9 +110,8 @@ const { product, images } = data;
         quantity,
       });
       itemsInCart.set(cart.length);
-      //TODO: cambiar con view transition;
 
-      // window.location.href = '/cart'
+      navigate('/cart')
     });
   });
 </script>

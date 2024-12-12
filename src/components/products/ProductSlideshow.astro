@@ -18,7 +18,16 @@ const fullImages = images.map((image) => {
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    {fullImages.map((image) => <img class="swiper-slide" src={image}  alt='Product image' class="w-full h-full px-8 object-cover"/>)}
+    {
+      fullImages.map((image) => (
+        <img
+          class="swiper-slide"
+          src={image}
+          alt="Product image"
+          class="w-full h-full px-8 object-cover"
+        />
+      ))
+    }
     ...
   </div>
   <!-- If we need pagination -->
@@ -35,10 +44,13 @@ const fullImages = images.map((image) => {
 <script>
   import Swiper from "swiper";
   import { Pagination } from "swiper/modules";
-  const swiper = new Swiper(".swiper", {
-    pagination: {
-      el: ".swiper-pagination",
-    },
-    modules: [Pagination],
+  document.addEventListener("astro:page-load", () => {
+    
+    const swiper = new Swiper(".swiper", {
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      modules: [Pagination],
+    });
   });
 </script>
