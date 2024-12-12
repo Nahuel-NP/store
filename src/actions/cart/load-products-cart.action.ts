@@ -12,7 +12,7 @@ export const LoadProductFromCartAction = defineAction({
 
     const cart = JSON.parse(cookies.get('cart')?.value ?? '[]') as CartItem[];
 
-    if (!cart) {
+    if (cart.length === 0) {
       return [];
     }
     const ids = cart.map(item => item.id);

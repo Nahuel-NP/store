@@ -7,14 +7,19 @@ const { data: products, error } = await Astro.callAction(
   LoadProductFromCartAction,
   {}
 );
+
+console.log(error)
 if (error) {
   return Astro.redirect("/");
 }
+let total = 0;
 
-const total = products.reduce(
-  (acc, product) => acc + product.price * product.quantity,
-  0
-);
+if (products.length > 0) {
+  total = products.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0
+  );
+}
 ---
 
 <MainLayout title="Cart">
