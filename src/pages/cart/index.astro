@@ -88,8 +88,9 @@ if (products.length > 0) {
 </MainLayout>
 
 <script>
+  import { itemsInCart } from "@/store/cart.store";
   import { CartCookiesClient } from "@/utils";
-import { navigate } from "astro:transitions/client";
+  import { navigate } from "astro:transitions/client";
 
   document.addEventListener("astro:page-load", () => {
     const deleteButtons: NodeListOf<HTMLButtonElement> =
@@ -104,10 +105,9 @@ import { navigate } from "astro:transitions/client";
         const productId = target.dataset.id ?? "";
         const size = target.dataset.size ?? "";
 
-        console.log({ productId, size });
-        CartCookiesClient.removeFromCart(productId, size);
-
-        navigate('/cart')
+        const cart = CartCookiesClient.removeFromCart(productId, size);
+        itemsInCart.set(cart.length);
+        navigate("/cart");
       });
     });
   });
