@@ -32,7 +32,9 @@ const { product, images } = data;
           ))
         }
       </ul>
-      <span class="text-red-500 text-xs m-0 invisible" id="error-msg">Seleccione una talla</span>
+      <span class="text-red-500 text-xs m-0 invisible" id="error-msg"
+        >Seleccione una talla</span
+      >
       <h3 class="mt-5">Cantidad</h3>
       <div>
         <button class="btn-quantity">-</button>
@@ -40,7 +42,8 @@ const { product, images } = data;
         <button class="btn-quantity">+</button>
       </div>
 
-      <button class="mt-5 bg-blue-500 text-white p-3 w-full disabled:bg-gray-200"
+      <button
+        class="mt-5 bg-blue-500 text-white p-3 w-full disabled:bg-gray-200"
         >Añadir al carrito</button
       >
 
@@ -52,9 +55,10 @@ const { product, images } = data;
   <input type="hidden" id="product-id" value={product.id} />
 </MainLayout>
 <script>
-  import {CartCookiesClient} from '@/utils'
+  import { itemsInCart } from "@/store/cart.store";
+  import { CartCookiesClient } from "@/utils";
   const sizeElements = document.querySelectorAll("li");
-  const errorEl = document.querySelector('#error-msg');
+  const errorEl = document.querySelector("#error-msg");
 
   sizeElements.forEach((liEl) => {
     liEl.addEventListener("click", () => {
@@ -62,7 +66,7 @@ const { product, images } = data;
         sizeEl.classList.remove("selected-size")
       );
       liEl.classList.add("selected-size");
-      errorEl?.classList.add('invisible');
+      errorEl?.classList.add("invisible");
     });
   });
 
@@ -89,20 +93,20 @@ const { product, images } = data;
   addToCartBtn.addEventListener("click", () => {
     const size = document.querySelector(".selected-size")?.textContent;
     if (!size) {
-      errorEl?.classList.remove('invisible');
-      return 
+      errorEl?.classList.remove("invisible");
+      return;
     }
-    addToCartBtn.disabled = true;
+    // addToCartBtn.disabled = true;
 
-
-    CartCookiesClient.addToCart({
+    const cart = CartCookiesClient.addToCart({
       id: productIdInput.value,
       size,
       quantity,
-    })
+    });
+    itemsInCart.set(cart.length)
     //TODO: cambiar con view transition;
 
-    window.location.href = '/cart'
+    // window.location.href = '/cart'
   });
 </script>
 
