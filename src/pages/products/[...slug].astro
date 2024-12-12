@@ -57,56 +57,62 @@ const { product, images } = data;
 <script>
   import { itemsInCart } from "@/store/cart.store";
   import { CartCookiesClient } from "@/utils";
-  const sizeElements = document.querySelectorAll("li");
-  const errorEl = document.querySelector("#error-msg");
 
-  sizeElements.forEach((liEl) => {
-    liEl.addEventListener("click", () => {
-      sizeElements.forEach((sizeEl) =>
+  document.addEventListener("astro:page-load", () => {
+    const sizeElements = document.querySelectorAll("li");
+    const errorEl = document.querySelector("#error-msg");
+
+    sizeElements.forEach((liEl) => {
+      liEl.addEventListener("click", () => {
+        sizeElements.forEach((sizeEl) =>
         sizeEl.classList.remove("selected-size")
-      );
-      liEl.classList.add("selected-size");
-      errorEl?.classList.add("invisible");
+        );
+        liEl.classList.add("selected-size");
+        errorEl?.classList.add("invisible");
+      });
     });
-  });
-
-  const quantityInput = document.querySelector("input") as HTMLInputElement;
-  const productIdInput = document.querySelector(
-    "#product-id"
-  ) as HTMLInputElement;
-
-  let quantity = 1;
-
-  const [decrementBtn, incrementBtn, addToCartBtn] =
+    
+    const quantityInput = document.querySelector("input") as HTMLInputElement;
+    const productIdInput = document.querySelector(
+      "#product-id"
+    ) as HTMLInputElement;
+    
+    let quantity = 1;
+    
+    const [decrementBtn, incrementBtn, addToCartBtn] =
     document.querySelectorAll("button");
-
-  incrementBtn.addEventListener("click", () => {
-    quantity = Math.min(quantity + 1, 5);
-    quantityInput.value = quantity.toString();
-  });
-
-  decrementBtn.addEventListener("click", () => {
-    quantity = Math.max(quantity - 1, 1);
-    quantityInput.value = quantity.toString();
-  });
-
-  addToCartBtn.addEventListener("click", () => {
-    const size = document.querySelector(".selected-size")?.textContent;
-    if (!size) {
-      errorEl?.classList.remove("invisible");
+    
+    if (!incrementBtn || !decrementBtn || !addToCartBtn) {
       return;
     }
-    // addToCartBtn.disabled = true;
-
-    const cart = CartCookiesClient.addToCart({
-      id: productIdInput.value,
-      size,
-      quantity,
+    incrementBtn.addEventListener("click", () => {
+      quantity = Math.min(quantity + 1, 5);
+      quantityInput.value = quantity.toString();
     });
-    itemsInCart.set(cart.length)
-    //TODO: cambiar con view transition;
 
-    // window.location.href = '/cart'
+    decrementBtn.addEventListener("click", () => {
+      quantity = Math.max(quantity - 1, 1);
+      quantityInput.value = quantity.toString();
+    });
+
+    addToCartBtn.addEventListener("click", () => {
+      const size = document.querySelector(".selected-size")?.textContent;
+      if (!size) {
+        errorEl?.classList.remove("invisible");
+        return;
+      }
+      // addToCartBtn.disabled = true;
+
+      const cart = CartCookiesClient.addToCart({
+        id: productIdInput.value,
+        size,
+        quantity,
+      });
+      itemsInCart.set(cart.length);
+      //TODO: cambiar con view transition;
+
+      // window.location.href = '/cart'
+    });
   });
 </script>
 
