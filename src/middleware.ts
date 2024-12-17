@@ -26,7 +26,7 @@ export const onRequest = defineMiddleware(
       locals.isAdmin = user.role === 'admin';
     }
 
-  if (!locals.isAdmin && url.pathname.startsWith('/dashboard')) {
+  if (!locals.isAdmin && url.pathname.startsWith('/admin')) {
       return redirect('/');
     }
 
