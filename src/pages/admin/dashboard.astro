@@ -36,7 +36,8 @@ const { products, totalPages } = data;
         products.map((product) => (
           <tr>
             <td>
-              <ProductImage src={product.images.split(",").at(0)} alt={product.title} className="w-16 h-16" />
+              {/* Da error si no hay imagen */}
+              <ProductImage src={product.images.split(",").at(0)!} alt={product.title} className="w-16 h-16" />
             </td>
             <td>
               <a
