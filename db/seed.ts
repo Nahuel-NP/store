@@ -36,8 +36,8 @@ export default async function seed() {
 	}
 
 	const nahuel = {
-		id: UUID(),
-		name: 'ABC-123-NAHUEL',
+		id: 'ABC-123-NAHUEL',
+		name: 'Nahuel Pedroso',
 		email: 'pedroso.nahuel.dev@gmail.com',
 		password: bcrypt.hashSync('123456'),
 		role: 'admin'
