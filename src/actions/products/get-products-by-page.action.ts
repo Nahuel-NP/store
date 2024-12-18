@@ -36,8 +36,15 @@ LIMIT ${limit} OFFSET ${(page - 1) * limit};`)
 
     const { rows } = await db.run(productsQuery);
 
+    const products = rows.map((product) => {
+      
+      return {
+        ...product,
+        images: product.images ? product.images : 'no-image.png'
+      }
+    })
     return {
-      products: rows as unknown as ProductWithImage[],
+      products: products as unknown as ProductWithImage[],
       totalPages,
       currentPage: page,
       totalRecords: totalRecords.count
