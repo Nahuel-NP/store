@@ -6,6 +6,9 @@ import { z } from "astro:schema"
 import { getSession } from "auth-astro/server";
 import { v4 as UUID } from 'uuid';
 
+const MAX_FILE_SIZE = 5_000_000 // 5MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
 export const createUpdateProductAction = defineAction({
   accept: 'form',
   input: z.object({
@@ -20,7 +23,19 @@ export const createUpdateProductAction = defineAction({
     title: z.string(),
     type: z.string(),
     //TODO: imagen
+
+    imageFiles: z.array(
+      z.instanceof(File)
+        .refine(file => file.size <= MAX_FILE_SIZE, 'Max image size 5MB')
+        .refine(file => {
+          if (file.size === 0) {
+            return true;
+          }
+          return ACCEPTED_IMAGE_TYPES.includes(file.type), 'Only .jpg, .jpeg, .png and .webp formats are supported.'
+        })
+    ).optional(),
   }),
+
   handler: async (form, { request }) => {
     const session = await getSession(request);
     const user = session?.user;
@@ -28,7 +43,7 @@ export const createUpdateProductAction = defineAction({
       throw new Error("Unauthorized");
     }
 
-    const { id = UUID(), ...rest } = form;
+    const { id = UUID(), imageFiles, ...rest } = form;
     rest.slug = rest.slug.toLowerCase().replaceAll(' ', '-').trim();
 
     const product = {
@@ -42,9 +57,8 @@ export const createUpdateProductAction = defineAction({
     } else {
       await db.update(Product).set(product).where(eq(Product.id, id))
     }
-    //Crear
-    //Update
-    //Insertar imagen
+
+    console.log({ imageFiles })
 
     return product;
   }
