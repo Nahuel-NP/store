@@ -22,6 +22,9 @@ const { products, totalPages } = data;
 <MainLayout title="Admin panel">
   <h1>Admin dashboard</h1>
   <p>Listado de productos</p>
+  <div class="flex justify-end">
+    <a href="/admin/products/new" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">Nuevo producto</a>
+  </div>
   <table class="w-full mt-2">
     <thead>
       <tr>
@@ -37,7 +40,11 @@ const { products, totalPages } = data;
           <tr>
             <td>
               {/* Da error si no hay imagen */}
-              <ProductImage src={product.images.split(",").at(0)!} alt={product.title} className="w-16 h-16" />
+              <ProductImage
+                src={product.images.split(",").at(0)!}
+                alt={product.title}
+                className="w-16 h-16"
+              />
             </td>
             <td>
               <a

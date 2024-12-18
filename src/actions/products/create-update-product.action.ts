@@ -36,9 +36,12 @@ export const createUpdateProductAction = defineAction({
       user: user.id!,
       ...rest
     }
-    console.log({ product })
 
-    await db.update(Product).set(product).where(eq(Product.id, id))
+    if (!form.id) {
+      await db.insert(Product).values(product)
+    } else {
+      await db.update(Product).set(product).where(eq(Product.id, id))
+    }
     //Crear
     //Update
     //Insertar imagen
