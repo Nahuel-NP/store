@@ -1,5 +1,6 @@
 
 
+import { ImageUpload } from "@/utils/image-upload";
 import { defineAction } from "astro:actions"
 import { db, eq, Product } from "astro:db";
 import { z } from "astro:schema"
@@ -59,6 +60,14 @@ export const createUpdateProductAction = defineAction({
     }
 
     console.log({ imageFiles })
+    imageFiles?.forEach(async (imageFile) => {
+
+      if (imageFile.size <= 0) {
+        return;
+      }
+      await ImageUpload.upload(imageFile);
+
+    })
 
     return product;
   }
