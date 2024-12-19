@@ -1,13 +1,13 @@
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: import.meta.env.CLOUDINARU_CLOUD_NAME,
-  api_key: import.meta.env.CLOUDINARU_API_KEY,
-  api_secret: import.meta.env.CLOUDINARU_API_SECRET // Click 'View API Keys' above to copy your API secret
+  cloud_name: import.meta.env.CLOUDINARY_CLOUD_NAME,
+  api_key: import.meta.env.CLOUDINARY_API_KEY,
+  api_secret: import.meta.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
 });
 
 export class ImageUpload {
-  static async uploadImage(file: File) {
+  static async upload(file: File) {
 
     const buffer = await file.arrayBuffer();
     const base64Image = Buffer.from(buffer).toString('base64');
