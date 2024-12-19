@@ -16,9 +16,8 @@ export class ImageUpload {
       `data:image/${imageType};base64,${base64Image}`,
     )
 
-    console.log(resp)
-
-    return 'http://missing-image.com/abc.jpeg';
+  
+    return resp.secure_url;
 
   }
 }
