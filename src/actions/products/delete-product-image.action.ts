@@ -6,7 +6,7 @@ import { db, eq, ProductImage } from "astro:db";
 import { z } from "astro:schema"
 import { getSession } from "auth-astro/server";
 
-export const DeleteProductImageAction = defineAction({
+export const deleteProductImageAction = defineAction({
   accept: 'json',
   input: z.string(),
   handler: async (imageId, { request }) => {
