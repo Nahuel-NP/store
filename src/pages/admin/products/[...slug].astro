@@ -220,7 +220,7 @@ const { product, images } = data;
         </div>
 
         <!-- Slideshow -->
-        <ProductSlideshow images={images.map(image=>image.image)} />
+        <ProductSlideshow images={images.map((image) => image.image)} />
 
         <table class="w-full border">
           <thead>
@@ -231,8 +231,8 @@ const { product, images } = data;
           </thead>
           <tbody>
             {
-              images.map(({image,id}) => (
-                <tr class="border">
+              images.map(({ image, id }) => (
+                <tr class="border" id={id}>
                   <td class="flex justify-center">
                     <ProductImage
                       src={image}
@@ -241,8 +241,9 @@ const { product, images } = data;
                     />
                   </td>
                   <td class="text-center">
-                    <button
-                      data-id={id} class="btn-delete-image">X</button>
+                    <button type="button" data-id={id} class="btn-delete-image">
+                      X
+                    </button>
                   </td>
                 </tr>
               ))
@@ -295,6 +296,26 @@ const { product, images } = data;
       }
 
       navigate(`/admin/products/${data.slug}`);
+    });
+
+    const btnsDeleteImage = document.querySelectorAll(".btn-delete-image");
+
+    btnsDeleteImage.forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
+        const id = btn.getAttribute("data-id");
+
+        if (!id) {
+          return;
+        }
+        const { error } = await actions.deleteProductImageAction(id);
+
+        if (error) {
+          alert(error.message);
+          return;
+        }
+        const trId = `#${id}`;
+        document.querySelector(trId)?.remove();
+      });
     });
   });
 </script>
