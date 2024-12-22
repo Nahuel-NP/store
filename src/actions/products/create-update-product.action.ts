@@ -60,7 +60,7 @@ export const createUpdateProductAction = defineAction({
       )
     } else {
       queries.push(
-        await db.update(Product).set(product).where(eq(Product.id, id))
+        db.update(Product).set(product).where(eq(Product.id, id))
       )
     }
 
