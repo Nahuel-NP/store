@@ -5,7 +5,7 @@ import { db, eq, Product, ProductImage } from "astro:db";
 import { z } from "astro:schema"
 
 const newProduct = {
-  id:'',
+  id: '',
   description: 'Nueva descripción',
   gender: 'men',
   price: 12,
@@ -33,6 +33,6 @@ export const getProductBySlugAction = defineAction({
     const images = await db.select().from(ProductImage).where(eq(ProductImage.productID, product.id));
 
 
-    return { product: product, images: images.map(img => img.image) };
+    return { product: product, images };
   }
 })
