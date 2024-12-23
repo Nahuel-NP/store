@@ -215,6 +215,7 @@ const { product, images } = data;
               type="file"
               accept="image/*"
               multiple
+              class="hidden"
             />
           </label>
         </div>
@@ -316,6 +317,67 @@ const { product, images } = data;
         const trId = `#${id}`;
         document.querySelector(trId)?.remove();
       });
+    });
+
+    const lblSelectedFiles = document.querySelector(
+      "#lbl-selected-files"
+    ) as HTMLParagraphElement;
+    const dropZone = document.querySelector("#drop-zone") as HTMLLabelElement;
+
+    const fileInput = document.querySelector(
+      "#file-upload"
+    ) as HTMLInputElement;
+
+    const preventDefaults = (e: DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const highLight = (e: DragEvent) => {
+      dropZone.classList.add("border-blue-500", "bg-blue-50");
+    };
+
+    const unHighLight = (e: DragEvent) => {
+      dropZone.classList.remove("border-blue-500", "bg-blue-50");
+    };
+
+    (["dragenter", "dragover", "dragleave", "drop"] as const).forEach(
+      (eventName) => {
+        dropZone.addEventListener(eventName, preventDefaults);
+        document.body.addEventListener(eventName, preventDefaults);
+      }
+    );
+
+    (["dragenter", "dragover"] as const).forEach((eventName) => {
+      dropZone.addEventListener(eventName, highLight);
+    });
+
+    (["dragleave", "drop"] as const).forEach((eventName) => {
+      dropZone.addEventListener(eventName, unHighLight);
+    });
+
+    const createFileList = (files: File[]) => {
+      const dataTransfer = new DataTransfer();
+      files.forEach((file) => dataTransfer.items.add(file));
+      return dataTransfer.files;
+    };
+
+    const handleFiles = (files: FileList) => {
+      const validFiles = Array.from(files).filter((file) =>
+        file.type.startsWith("image/")
+      );
+
+      if (fileInput && validFiles.length > 0) {
+        fileInput.files = createFileList(validFiles);
+        lblSelectedFiles.textContent = `${validFiles.length} archivos seleccionados`;
+      }
+    };
+
+    dropZone.addEventListener("drop", (e) => {
+      const files = e.dataTransfer?.files;
+      if (files) {
+        handleFiles(files);
+      }
     });
   });
 </script>
