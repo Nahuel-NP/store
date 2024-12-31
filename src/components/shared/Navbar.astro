@@ -31,8 +31,8 @@ const { isLoggedIn, isAdmin } = Astro.locals;
             <a href="/login">Ingresar</a>
           </li>
         ) : (
-          <li id="logout" class="font-semibold text-gray-700">
-            <a href="#">Salir</a>
+          <li  class="font-semibold text-gray-700">
+            <button id="logout">Salir</button>
           </li>
         )
       }
@@ -43,7 +43,7 @@ const { isLoggedIn, isAdmin } = Astro.locals;
 <script>
   const { signOut } = await import("auth-astro/client");
 
-  const logoutElem = document.querySelector("#logout") as HTMLLIElement;
+  const logoutElem = document.querySelector("#logout") as HTMLButtonElement;
 
   logoutElem?.addEventListener("click", async () => {
     await signOut();
