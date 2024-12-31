@@ -14,14 +14,29 @@ const path = url.pathname;
 ---
 
 <div class="flex justify-between items-center my-32">
-  <a href={`${path}?page=${Math.max(currentPage - 1, 1)}`} class="button"
-    >Anteriores</a
-  >
+  {
+    currentPage === 1 ? (
+      <span class="p-2 rounded cursor-not-allowed bg-gray-300">Anteriores</span>
+    ) : (
+      <a href={`${path}?page=${Math.max(currentPage - 1, 1)}`} class="button">
+        Anteriores
+      </a>
+    )
+  }
   <span class="font-semibold">Página {currentPage} de {totalPages}</span>
-  <a
-    href={`${path}?page=${Math.min(currentPage + 1, totalPages)}`}
-    class="button">Siguientes</a
-  >
+
+  {
+    currentPage === totalPages ? (
+      <span class="p-2 rounded cursor-not-allowed bg-gray-300">Siguientes</span>
+    ) : (
+      <a
+        href={`${path}?page=${Math.min(currentPage + 1, totalPages)}`}
+        class="button"
+      >
+        Siguientes
+      </a>
+    )
+  }
 </div>
 
 <style>
