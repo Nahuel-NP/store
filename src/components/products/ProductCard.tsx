@@ -23,8 +23,8 @@ export const ProductCard = ({ product }: Props) => {
         }
         onMouseLeave={() => setCurrentImage(images[0])}
       />
-      <h4>{product.title}</h4>
-      <p>${product.price}</p>
+      <h4 className="text-base ">{product.title}</h4>
+      <p className="text-gray-600 font-semibold">${product.price}</p>
     </a>
   );
 };
